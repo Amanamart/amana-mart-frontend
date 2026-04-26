@@ -8,11 +8,11 @@ import { Card } from '@/components/ui/card';
 import { StatusBadge } from '@/components/ui/badge';
 
 const MOCK_MODULES = [
-  { id: '1', name: 'Grocery', type: 'grocery', icon: <ShoppingBasket className="w-5 h-5" />, stores: 45, status: 'active', color: '#10b981' },
-  { id: '2', name: 'Pharmacy', type: 'pharmacy', icon: <Pill className="w-5 h-5" />, stores: 28, status: 'active', color: '#ef4444' },
-  { id: '3', name: 'eCommerce', type: 'ecommerce', icon: <ShoppingBag className="w-5 h-5" />, stores: 112, status: 'active', color: '#3b82f6' },
-  { id: '4', name: 'Parcel', type: 'parcel', icon: <Truck className="w-5 h-5" />, stores: 0, status: 'inactive', color: '#8b5cf6' },
-  { id: '5', name: 'Food Delivery', type: 'food', icon: <UtensilsCrossed className="w-5 h-5" />, stores: 86, status: 'active', color: '#f59e0b' },
+  { id: '1', name: 'Grocery', type: 'grocery', icon: '🛒', stores: 45, status: 'active', color: '#1aab50', description: 'Fresh groceries' },
+  { id: '2', name: 'Pharmacy', type: 'pharmacy', icon: '💊', stores: 28, status: 'active', color: '#ef4444', description: 'Medicines' },
+  { id: '3', name: 'Food', type: 'food', icon: '🍕', stores: 86, status: 'active', color: '#f59e0b', description: 'Restaurant food' },
+  { id: '4', name: 'Shop', type: 'shop', icon: '🛍️', stores: 112, status: 'active', color: '#3b82f6', description: 'General shopping' },
+  { id: '5', name: 'Courier', type: 'parcel', icon: '📦', stores: 0, status: 'active', color: '#f97316', description: 'Parcel delivery' },
 ];
 
 export function ModuleSetupClient() {
@@ -69,7 +69,7 @@ export function ModuleSetupClient() {
             <div className="p-5 flex items-start justify-between">
               <div className="flex gap-4">
                 <div 
-                  className="w-12 h-12 rounded-[var(--radius-lg)] flex items-center justify-center text-white shrink-0 shadow-sm"
+                  className="w-12 h-12 rounded-[var(--radius-lg)] flex items-center justify-center text-xl text-white shrink-0 shadow-sm"
                   style={{ backgroundColor: module.color }}
                 >
                   {module.icon}

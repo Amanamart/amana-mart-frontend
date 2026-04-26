@@ -58,12 +58,20 @@ export default function ClassifiedLayout({ children }: { children: React.ReactNo
           </button>
 
           {/* Search Bar */}
-          <div style={{ flex: 1, position: 'relative' }}>
+          <form 
+            onSubmit={(e) => {
+              e.preventDefault();
+              const query = (e.currentTarget.elements.namedItem('search') as HTMLInputElement).value;
+              window.location.href = `/classified/ads?search=${encodeURIComponent(query)}`;
+            }}
+            style={{ flex: 1, position: 'relative' }}
+          >
             <Search size={18} style={{
               position: 'absolute', left: 14, top: '50%',
               transform: 'translateY(-50%)', color: '#999',
             }} />
             <input
+              name="search"
               type="text"
               placeholder="What are you looking for?"
               style={{
@@ -74,7 +82,8 @@ export default function ClassifiedLayout({ children }: { children: React.ReactNo
                 background: '#fff',
               }}
             />
-          </div>
+            <button type="submit" style={{ display: 'none' }}>Search</button>
+          </form>
 
           {/* Actions */}
           <div style={{ display: 'flex', alignItems: 'center', gap: 12, flexShrink: 0 }}>

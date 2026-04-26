@@ -1,41 +1,28 @@
 # Amana Mart Frontend
 
-The official customer web portal for Amana Mart. A unified Super App experience on the web.
+Main customer-facing web application for the Amana Mart Super App.
 
-## Technology Stack
-- **Next.js** (App Router)
-- **TypeScript**
-- **Tailwind CSS**
-- **Lucide React** (Icons)
-- **Framer Motion** (Animations)
+## Features
+- **Multi-Module Navigation**: Floating module dock for seamless switching between business types.
+- **8 Core Modules**: Grocery, Pharmacy, Food, Shop, Courier, Ride, Service, and Classified.
+- **Dynamic Storefront**: Next.js 14 based high-performance storefront.
+- **Mobile Responsive**: Fully optimized for mobile browsers.
 
-## Key Features
-- **Module Switcher**: Instantly switch between 8 business modules.
-- **Dynamic Themes**: Each module (Grocery, Pharmacy, etc.) has its own branding and colors.
-- **Super App Profile**: One profile to manage orders, rides, services, and affiliate earnings.
-- **Responsive Design**: Premium mobile-first experience.
+## Technologies
+- **Framework**: Next.js 14 (App Router)
+- **Styling**: Tailwind CSS
+- **State Management**: Zustand (Module Store)
+- **Icons**: Lucide React
+- **Animations**: Framer Motion
 
-## Setup Instructions
+## Setup
+1. Clone the repository.
+2. Run `npm install`.
+3. Create a `.env` file from `.env.example`.
+4. Start development server: `npm run dev`.
 
-### 1. Prerequisites
-- Node.js installed
-- Amana Mart Backend API running
-
-### 2. Installation
-```bash
-npm install
-```
-
-### 3. Environment Variables
-Copy `.env.example` to `.env` and fill in the backend API URL.
-```bash
-NEXT_PUBLIC_API_URL=http://localhost:5000/api
-```
-
-### 4. Running the App
-```bash
-npm run dev
-```
+## Module Navigation
+The frontend features a premium floating sidebar (Desktop) and bottom dock (Mobile) for switching between the 8 core business modules. This logic is managed by `useModuleStore` and `ModuleContext`.
 
 ---
 © 2026 Amana Mart. All rights reserved.

@@ -185,13 +185,28 @@ export default function AdminClassifiedDashboard() {
               { href: '/admin/classified/locations', label: 'Seed BD Locations', icon: <Shield size={16} />, color: '#2563eb' },
               { href: '/admin/classified/memberships', label: 'Manage Plans', icon: <Star size={16} />, color: '#7c3aed' },
               { href: '/admin/classified/promotions', label: 'Promo Packages', icon: <Megaphone size={16} />, color: '#FF6B35' },
+              { href: '#', label: 'Seed Initial Data', icon: <CheckCircle size={16} />, color: '#1aab50', onClick: async () => {
+                if(confirm('Seed initial categories and locations?')) {
+                  try {
+                    await fetch('/api/classified/admin/categories/seed', { method: 'POST' });
+                    alert('Seeding started!');
+                  } catch(e) { alert('Failed to seed'); }
+                }
+              }},
             ].map(a => (
-              <Link key={a.href} href={a.href} style={{
-                display: 'flex', alignItems: 'center', gap: 10, padding: '10px 12px',
-                borderRadius: 10, marginBottom: 6, textDecoration: 'none',
-                background: '#f9f9f9', color: '#333', fontSize: 14, fontWeight: 500,
-                transition: 'background 0.2s',
-              }}
+              <Link key={a.href} href={a.href} 
+                onClick={(e) => {
+                  if(a.onClick) {
+                    e.preventDefault();
+                    a.onClick();
+                  }
+                }}
+                style={{
+                  display: 'flex', alignItems: 'center', gap: 10, padding: '10px 12px',
+                  borderRadius: 10, marginBottom: 6, textDecoration: 'none',
+                  background: '#f9f9f9', color: '#333', fontSize: 14, fontWeight: 500,
+                  transition: 'background 0.2s',
+                }}
                 onMouseEnter={e => { (e.currentTarget as HTMLAnchorElement).style.background = '#f0f0f0'; }}
                 onMouseLeave={e => { (e.currentTarget as HTMLAnchorElement).style.background = '#f9f9f9'; }}
               >

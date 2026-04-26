@@ -31,6 +31,7 @@ export const metadata: Metadata = {
 };
 
 import { Providers } from "./Providers";
+import { FloatingModuleDock, MobileModuleDock } from "@/components/layout/FloatingModuleDock";
 
 export default function RootLayout({
   children,
@@ -40,7 +41,11 @@ export default function RootLayout({
   return (
     <html lang="en" className="h-full antialiased">
       <body className="min-h-full flex flex-col">
-        <Providers>{children}</Providers>
+        <Providers>
+          {children}
+          <FloatingModuleDock />
+          <MobileModuleDock />
+        </Providers>
       </body>
     </html>
   );

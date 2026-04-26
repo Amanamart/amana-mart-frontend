@@ -1,10 +1,9 @@
 'use client';
 
-import React, { useState } from 'react';
-import Link from 'next/link';
-import { Search, MapPin, ChevronRight, Star, Heart, Eye, TrendingUp, Shield, Award, Zap } from 'lucide-react';
+import { classifiedService } from '@/services/api/classified';
 
-const CATEGORIES = [
+// Initial fallback categories
+const DEFAULT_CATEGORIES = [
   { name: 'Mobiles', slug: 'mobiles', icon: '📱', count: 2840 },
   { name: 'Electronics', slug: 'electronics', icon: '💻', count: 1920 },
   { name: 'Vehicles', slug: 'vehicles', icon: '🚗', count: 3150 },
@@ -134,6 +133,22 @@ function AdCard({ ad }: { ad: typeof FEATURED_ADS[0] }) {
 
 export default function ClassifiedHomePage() {
   const [searchQuery, setSearchQuery] = useState('');
+  const [categories, setCategories] = useState(DEFAULT_CATEGORIES);
+  const [loading, setLoading] = useState(true);
+
+  React.useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const cats = await classifiedService.getCategories();
+        if (cats && cats.length > 0) setCategories(cats);
+      } catch (err) {
+        console.error('Failed to fetch categories:', err);
+      } finally {
+        setLoading(false);
+      }
+    };
+    fetchData();
+  }, []);
 
   return (
     <div>
@@ -228,7 +243,7 @@ export default function ClassifiedHomePage() {
             </Link>
           </div>
           <div style={{ display: 'grid', gridTemplateColumns: 'repeat(7, 1fr)', gap: 12 }}>
-            {CATEGORIES.map(cat => (
+            {categories.map(cat => (
               <Link key={cat.slug} href={`/classified/category/${cat.slug}`} style={{ textDecoration: 'none' }}>
                 <div style={{
                   background: '#fff', borderRadius: 12, padding: '16px 8px', textAlign: 'center',

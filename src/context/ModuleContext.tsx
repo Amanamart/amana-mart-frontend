@@ -17,6 +17,8 @@ interface ModuleContextType {
   activeModule: ModuleType;
   setActiveModule: (module: ModuleType) => void;
   getModuleConfig: () => ModuleConfig;
+  modules: ModuleConfig[];
+  isLoading: boolean;
 }
 
 interface ModuleConfig {
@@ -110,6 +112,37 @@ export function ModuleProvider({ children }: { children: React.ReactNode }) {
   const pathname = usePathname();
   const [activeModule, setActiveModuleState] = useState<ModuleType>('shop');
 
+  const [modules, setModules] = useState<ModuleConfig[]>(Object.values(MODULES_CONFIG));
+  const [isLoading, setIsLoading] = useState(false);
+
+  useEffect(() => {
+    const fetchModules = async () => {
+      try {
+        const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL || 'http://localhost:5000/api'}/modules/active`);
+        if (res.ok) {
+          const data = await res.json();
+          if (data.length > 0) {
+            // Map backend modules to frontend config
+            const mappedModules = data.map((m: any) => ({
+              id: m.type,
+              label: m.name,
+              icon: m.icon || '📦',
+              color: m.themeColor || '#000000',
+              themeColor: m.themeColor || '#000000',
+              href: m.slug.startsWith('/') ? m.slug : `/${m.slug}`,
+              description: m.description || ''
+            }));
+            setModules(mappedModules);
+          }
+        }
+      } catch (error) {
+        console.error('Failed to fetch modules:', error);
+      }
+    };
+
+    fetchModules();
+  }, []);
+
   // Sync module with pathname on initial load and navigation
   useEffect(() => {
     if (pathname.startsWith('/classified')) {
@@ -136,11 +169,11 @@ export function ModuleProvider({ children }: { children: React.ReactNode }) {
   };
 
   const getModuleConfig = () => {
-    return MODULES_CONFIG[activeModule];
+    return modules.find(m => m.id === activeModule) || MODULES_CONFIG['shop'];
   };
 
   return (
-    <ModuleContext.Provider value={{ activeModule, setActiveModule, getModuleConfig }}>
+    <ModuleContext.Provider value={{ activeModule, setActiveModule, getModuleConfig, modules, isLoading }}>
       {children}
     </ModuleContext.Provider>
   );
